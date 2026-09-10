@@ -7,6 +7,6 @@ My goal here isn't just to copy-paste code from tutorials. Instead, I am buildin
 
 I have focused these projects on real-world problems in industries that I found interesting like Biomedical, Finance, and Luxury Retail.
 
-Alongside the code, I am also attaching theoretical and summarized notes and visual cheat sheets. I made them to help me study, but I am sharing them here in case they help anyone else who is learning!
+Alongside the code, I am also attaching theoretical and summarized cheat sheets. I made them to help me study, but I am sharing them here in case they help anyone else!
 
 
