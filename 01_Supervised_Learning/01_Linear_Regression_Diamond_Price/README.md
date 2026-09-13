@@ -43,3 +43,13 @@ Diamond-Price-Prediction/
 ├── src/
 ├── README.md
 └── requirements.txt
+
+## Project Structure 
+
+```text
+Diamond-Price-Prediction/
+├── data/
+├── notebooks/
+├── src/
+├── README.md
+└── requirements.txt
