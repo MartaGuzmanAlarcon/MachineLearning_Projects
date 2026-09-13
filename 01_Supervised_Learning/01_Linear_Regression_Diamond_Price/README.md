@@ -38,7 +38,7 @@ The core objective is to build an end-to-end predictive pipeline that estimates 
 
 ```text
 01_Linear_Regression_Diamond_Price/
-├── Dataset.txt
+├── DiamondDataset.txt
 ├── Diamond_Price_Prediction.ipynb
 └── README.md
 ```
