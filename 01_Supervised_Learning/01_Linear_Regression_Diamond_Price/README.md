@@ -35,15 +35,12 @@ The core objective is to build an end-to-end predictive pipeline that estimates 
    * **Market Insights:** : Analyzed how much extra market value (or price premium) buyers pay for better clarity and cut quality, keeping the diamond's size (carat) constant. VOLVER
 
 ## Project Structure 
+
+```text
 01_Linear_Regression_Diamond_Price/
 ├── Dataset.txt
 ├── Diamond_Price_Prediction.ipynb
 └── README.md
-├── data/
-├── notebooks/
-├── src/
-├── README.md
-└── requirements.txt
 
 ## Key Findings VOLVER
 
