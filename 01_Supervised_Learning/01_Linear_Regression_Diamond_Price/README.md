@@ -29,10 +29,10 @@ The core objective is to build an end-to-end predictive pipeline that estimates 
    * **Root Mean Squared Error (RMSE)**
    * **R² (Coefficient of Determination)**
    * **Result:** The top-performing model yielded a low RMSE and a high R², highlighting robust predictive power and valuable insights into feature importance.
-6. **Predictions & Business Insights:**
-   * **Price Estimation:** Generated individual price estimates using the trained model and compared predicted values directly against actual market prices.
+6. **Predictions & Business Insights:** VOLVER
+   * **Price Estimation:** Generated individual price estimates using the trained model and compared predicted values against actual prices. 
    * **Feature Importance Analysis:** Confirmed through feature importance metrics that carat weight acts as the primary price driver, while cut, clarity, and color play substantial secondary roles.
-   * **Market Insights:** Extracted actionable business takeaways, quantifying the specific financial premiums commanded by superior clarity grades and cuts while holding carat constant.
+   * **Market Insights:** : Analyzed how much extra market value (or price premium) buyers pay for better clarity and cut quality, keeping the diamond's size (carat) constant. VOLVER
 
 ## Project Structure 
 
