@@ -35,21 +35,27 @@ The core objective is to build an end-to-end predictive pipeline that estimates 
    * **Market Insights:** : Analyzed how much extra market value (or price premium) buyers pay for better clarity and cut quality, keeping the diamond's size (carat) constant. VOLVER
 
 ## Project Structure 
-
-```text
-Diamond-Price-Prediction/
+01_Linear_Regression_Diamond_Price/
+├── Dataset.txt
+├── Diamond_Price_Prediction.ipynb
+└── README.md
 ├── data/
 ├── notebooks/
 ├── src/
 ├── README.md
 └── requirements.txt
 
-## Project Structure 
+## Key Findings VOLVER
 
-```text
-Diamond-Price-Prediction/
-├── data/
-├── notebooks/
-├── src/
-├── README.md
-└── requirements.txt
+* Carat weight serves as the main driver behind market pricing, while quality characteristics like cut, color, and clarity contribute meaningful secondary value.
+* Applying a logarithmic transformation to the target variable effectively normalized residuals and improved overall model fit.
+* Non-linear tree-based regressors outperformed standard linear models by successfully capturing complex relationships between the features and price.
+* Engineering custom interaction variables, such as combining carat and depth, noticeably enhanced the overall accuracy of the models.
+
+## Future Improvements VOLVER
+
+* Incorporate external market factors, such as regional pricing shifts or dealer premiums, to enrich the feature space and capture broader economic trends.
+* Build an interactive web application to deploy the trained model, allowing users to calculate real-time diamond valuations effortlessly.
+* Experiment with advanced model stacking and blending techniques to drive prediction errors even lower.
+* Integrate explainability tools like SHAP values to provide transparent and intuitive breakdowns for individual price estimates.
+* Implement ongoing tracking practices to monitor model reliability and performance as real-world market dynamics shift over time.
