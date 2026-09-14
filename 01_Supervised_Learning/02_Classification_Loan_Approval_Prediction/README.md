@@ -3,7 +3,7 @@
 
 Classify loan approval from applicant, income, loan and credit-history attributes.
 
-## Overview VOLVER
+## Overview VOLVER, FUSIONAR
 
 This project is a focused, reproducible classification case study, split across two notebooks:
 
