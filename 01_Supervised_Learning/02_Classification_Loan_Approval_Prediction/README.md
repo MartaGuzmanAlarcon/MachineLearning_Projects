@@ -3,7 +3,7 @@
 
 Classify loan approval from applicant, income, loan and credit-history attributes.
 
-## Overview
+## Overview VOLVER
 
 This project is a focused, reproducible classification case study, split across two notebooks:
 
@@ -25,13 +25,13 @@ This project is a focused, reproducible classification case study, split across 
 ## Dataset
 
 - **Availability:** Included — `loan-train.csv`, `loan-test.csv`
-- **Recorded source:** Training and scoring files are included in this project
+- **Recorded source:** Training and scoring files are included in this project VOLVER
 - **Target:** `Loan_Status` (present in `loan-train.csv` only; `loan-test.csv` is unlabeled)
 
 Dataset licensing and usage conditions remain with the original publisher. Large or externally hosted data
 is intentionally not duplicated here.
 
-## 📓 Notebooks
+## 📓 Notebooks VOLVER
 
 ### `loan_approval_classification.ipynb`
 The main notebook. Loads and cleans `loan-train.csv`, does a first pass of EDA, splits off an untouched
@@ -60,7 +60,7 @@ steps first, using the same method and models, so it has a fitted model to build
 ```
 Data validation
       ↓
-Focused EDA (main notebook) + Extended EDA (supplementary notebook)
+Focused EDA 
       ↓
 Train / holdout split
       ↓
@@ -70,12 +70,12 @@ Baseline and cross-validation
       ↓
 Holdout evaluation
       ↓
-Error analysis and interpretation (supplementary notebook)
+Error analysis and interpretation 
       ↓
-Scoring the unlabeled test set (supplementary notebook)
+Scoring the unlabeled test set 
 ```
 
-## 🛠️ Modelling Decisions
+## 🛠️ Modelling Decisions VOLVER
 
 - The Kaggle-only absolute path was replaced with a portable project-relative path.
 - `loan-test.csv` is an unlabeled scoring set; `ClaudeLoanApproval.ipynb` loads it, generates predictions,
@@ -127,7 +127,7 @@ project. The untouched holdout produced:
 - Matplotlib and Seaborn
 - Jupyter
 
-## Future Improvements
+## Future Improvements VOLVER
 
 - Validate on a newer or independently collected dataset.
 - Add domain-specific error costs and decision thresholds.
