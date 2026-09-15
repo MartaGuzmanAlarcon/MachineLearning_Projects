@@ -28,11 +28,11 @@ The core objective is to build an end-to-end predictive pipeline that estimates 
    * **Mean Absolute Error (MAE)**
    * **Root Mean Squared Error (RMSE)**
    * **R² (Coefficient of Determination)**
-   * **Result:** The top-performing model yielded a low RMSE and a high R², highlighting robust predictive power and valuable insights into feature importance.
-6. **Predictions & Business Insights:** VOLVER
+   * **Result:**  The tuned Gradient Boosting model was the top performer, with an RMSE of about $517 and R² of about 0.983, highlighting robust predictive power and valuable insights into feature importance. 
+6. **Predictions & Business Insights:** 
    * **Price Estimation:** Generated individual price estimates using the trained model and compared predicted values against actual prices. 
-   * **Feature Importance Analysis:** Confirmed through feature importance metrics that carat weight acts as the primary price driver, while cut, clarity, and color play substantial secondary roles.
-   * **Market Insights:** : Analyzed how much extra market value (or price premium) buyers pay for better clarity and cut quality, keeping the diamond's size (carat) constant. VOLVER
+   * **Feature Importance Analysis:**  Confirmed through feature importance metrics that carat weight (and the engineered features derived from it, like volume and carat squared) acts as the primary price driver, while cut, clarity, and color contribute meaningfully but far less.
+   * **Market Insights:** : Feature importance confirms that quality grades (clarity, color, cut) do add real value to a diamond's price, but carat size remains by far the dominant factor. This means that size sets the core market value, while quality determines the final premium.
 
 ## Project Structure 
 
@@ -42,12 +42,14 @@ The core objective is to build an end-to-end predictive pipeline that estimates 
 ├── Diamond_Price_Prediction.ipynb
 └── README.md
 ```
-## Key Findings VOLVER
+## Key Findings 
 
+ 
 * Carat weight serves as the main driver behind market pricing, while quality characteristics like cut, color, and clarity contribute meaningful secondary value.
 * Applying a logarithmic transformation to the target variable effectively normalized residuals and improved overall model fit.
-* Non-linear tree-based regressors outperformed standard linear models by successfully capturing complex relationships between the features and price.
+* Non-linear tree-based regressors outperformed standard linear models by successfully capturing complex relationships between the features and price. In this run, the untuned Linear Regression baseline performed far worse than every tree-based model (RMSE in the hundreds of thousands vs. around $500-720 for tree-based models), underlining how poorly a straight-line model fits this data.
 * Engineering custom interaction variables, such as combining carat and depth, noticeably enhanced the overall accuracy of the models.
+* The best-performing model overall was the tuned Gradient Boosting Regressor (MAE ≈ $262, RMSE ≈ $517, R² ≈ 0.983), narrowly ahead of the tuned Random Forest Regressor.
 
 ## Future Improvements VOLVER
 
