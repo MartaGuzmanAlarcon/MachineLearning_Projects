@@ -1,135 +1,102 @@
+# Loan Approval Classification
 
-# 🏦 Loan Approval Classification Prediction
+Predicting loan approval from applicant, income, and credit-history data — with a focus on leakage-safe evaluation and subgroup fairness testing, not just a headline accuracy number.
 
-Classify loan approval from applicant, income, loan and credit-history attributes.
+## Overview
 
-## Overview VOLVER, FUSIONAR
-
-This project is a focused, reproducible classification case study, split across two notebooks:
-
-- **`loan_approval_classification.ipynb`** — the core pipeline: data checks, a first pass at EDA,
-  leakage-safe preprocessing, a dummy baseline, cross-validated model comparison, and holdout evaluation
-  with interpretation.
-- **`ClaudeLoanApproval.ipynb`** — a supplementary notebook that adds a deeper EDA, scores the unlabeled
-  test set, and adds an error analysis.
-
-## Problem Statement
+End-to-end, reproducible classification case study: data validation → EDA → leakage-safe preprocessing → baseline + cross-validated model comparison → holdout evaluation → scoring an unlabeled test set → subgroup error analysis with statistical testing.
 
 | | |
 |---|---|
-| **Task** | Classification |
-| **Target** | `Loan_Status` |
+| **Task** | Binary classification |
+| **Target** | `Loan_Status` (Y / N) |
 | **Primary metric** | Macro F1 |
-| **Goal** | Classify loan approval from applicant, income, loan and credit-history attributes |
+| **Selected model** | Logistic Regression |
+| **Holdout result** | 0.86 accuracy · 0.81 macro F1 |
 
 ## Dataset
 
-- **Availability:** Included — `loan-train.csv`, `loan-test.csv`
-- **Recorded source:** Training and scoring files are included in this project VOLVER
-- **Target:** `Loan_Status` (present in `loan-train.csv` only; `loan-test.csv` is unlabeled)
+- `loan-train.csv` — labeled, used for training/holdout (614 rows)
+- `loan-test.csv` — unlabeled, scored only (no ground truth available)
+- Features: applicant demographics, income, loan amount/term, and credit history
 
-Dataset licensing and usage conditions remain with the original publisher. Large or externally hosted data
-is intentionally not duplicated here.
-
-## 📓 Notebooks VOLVER
-
-### `loan_approval_classification.ipynb`
-The main notebook. Loads and cleans `loan-train.csv`, does a first pass of EDA, splits off an untouched
-holdout set, builds a leakage-safe preprocessing pipeline, compares a dummy baseline against three models
-with cross-validation, evaluates the selected model on the holdout set, and interprets it with permutation
-importance.
-
-### `ClaudeLoanApproval.ipynb`
-A supplementary notebook that fills three gaps left open by the main notebook:
-
-- **Deeper EDA** — numeric feature distributions, numeric features vs. `Loan_Status`, a correlation check,
-  and approval rate by category for every categorical feature (`Credit_History` stands out as the strongest
-  single predictor).
-- **Scoring `loan-test.csv`** — this file is described as an optional unlabeled scoring set but was not
-  used anywhere in the main notebook. This notebook loads it, cleans it the same way as the training data,
-  generates predictions with the selected model, and saves them to `loan-test-predictions.csv`.
-- **Error analysis** — breaks down holdout mistakes into false positives and false negatives, profiles
-  their feature values, and checks whether prediction accuracy holds steady across subgroups such as
-  `Credit_History`, `Gender`, `Married`, `Property_Area` and `Education`.
-
-It briefly re-runs the main notebook's loading, cleaning, splitting, preprocessing and model-selection
-steps first, using the same method and models, so it has a fitted model to build the new analysis on.
-
-## 🔄 Project Workflow
+## Project Workflow
 
 ```
-Data validation
-      ↓
-Focused EDA 
-      ↓
-Train / holdout split
-      ↓
-Pipeline-based preprocessing
-      ↓
-Baseline and cross-validation
-      ↓
-Holdout evaluation
-      ↓
-Error analysis and interpretation 
-      ↓
-Scoring the unlabeled test set 
+Data validation → Focused EDA → Train/holdout split → Pipeline-based
+preprocessing → Baseline + cross-validation → Holdout evaluation →
+Scoring the unlabeled test set → Error analysis & subgroup testing
 ```
 
-## 🛠️ Modelling Decisions VOLVER
+## Modelling Decisions
 
-- The Kaggle-only absolute path was replaced with a portable project-relative path.
-- `loan-test.csv` is an unlabeled scoring set; `ClaudeLoanApproval.ipynb` loads it, generates predictions,
-  and saves them, since it has no target column to evaluate against.
+- **Median imputation for numeric features** — `ApplicantIncome`, `CoapplicantIncome`, `LoanAmount` are right-skewed with outliers, so the median stays representative where the mean wouldn't.
+- **Most-frequent imputation for categoricals** — avoids inventing a near-empty "Missing" category.
+- **`Credit_History` note** — stored as numeric (0/1), so it's routed through the numeric branch rather than the categorical one. In practice this barely matters: its distribution is heavily skewed toward 1.0, so median and mode coincide.
+- **`StandardScaler` on numeric features** — needed for Logistic Regression, otherwise `ApplicantIncome` (thousands) would dominate `Credit_History` (0/1) purely from scale.
+- **One-hot, not ordinal, encoding** — none of the categorical features have a natural order.
+- **No leakage** — all imputation values, scaling parameters, and encoded categories are fit on the training split only, inside the pipeline. Holdout and scoring data never influence fitting.
 
 ## Models Compared
 
-- Logistic Regression
-- Decision Tree
-- Random Forest
+| Model | Notes |
+|---|---|
+| Dummy (majority class) | Baseline any real model must beat |
+| Logistic Regression | **Selected** — best CV macro F1 |
+| Decision Tree | `max_depth=8`, `min_samples_leaf=4` |
+| Random Forest | Fixed hyperparameters, not tuned |
+
+Hyperparameters were fixed by hand, not grid-searched (see Future Improvements).
 
 ## Evaluation
 
-Both notebooks evaluate macro F1 and accuracy, with class-level precision/recall and a confusion matrix.
-`ClaudeLoanApproval.ipynb` adds a breakdown of holdout errors by type (false positive vs. false negative)
-and by subgroup.
+- **Model selection:** 5-fold stratified cross-validation on macro F1
+- **Holdout evaluation:** accuracy, macro F1, classification report, confusion matrix — the only point where predictions are checked against ground truth the model never trained on
+- **Subgroup check:** each subgroup's error count tested with a two-sided binomial test against the overall holdout error rate (14%), rather than judged by eye
 
 ## Verified Results
 
-The refurbished notebook was executed successfully against the dataset currently committed in this
-project. The untouched holdout produced:
+| Selected model | CV macro F1 | Holdout accuracy | Holdout macro F1 |
+|---|---|---|---|
+| Logistic Regression | 0.707 ± 0.077 | 0.8618 | 0.8147 |
 
-| Selected model | Accuracy | Macro F1 |
-|---|---|---|
-| Logistic Regression | 0.8618 | 0.8147 |
+- **Strongest predictor:** `Credit_History` — by far the biggest driver of approval; income and loan amount barely separate approved from rejected applicants on their own.
+- **By class:** "Y" (approved) — 0.84 precision / 0.99 recall, rarely misses a true approval. "N" (rejected) — 0.96 precision / 0.58 recall: when the model predicts rejection it's almost always right, but it only catches ~half of true rejections (22 of 38), defaulting to approval when uncertain.
+- **Generalization:** holdout macro F1 (0.815) landed above CV mean + 1 std (up to 0.784) — a favorable split, not a sign of overfitting, but a small holdout and high CV variance mean this is a reasonable result rather than a guarantee.
+- **Fairness finding:** `Property_Area = Rural` shows a statistically significant accuracy gap (0.676 vs. 0.86 overall, p = 0.005). No other subgroup (`Credit_History`, `Gender`, `Married`, `Education`) showed a significant gap.
+- Predictions for the unlabeled `loan-test.csv` were generated and saved to `loan-test-predictions.csv`.
 
-`ClaudeLoanApproval.ipynb` selects the same model using the same method, and its predictions on
-`loan-test.csv` are saved to `loan-test-predictions.csv`.
-
-> These values are a reproducibility record for the current data and dependency range, not a production
-> benchmark.
+*These are a reproducibility record for the current data/dependency range, not a production benchmark.*
 
 ## Repository Structure
 
 ```
-├── loan_approval_classification.ipynb
-├── ClaudeLoanApproval.ipynb
+├── LoanApproval_Classification.ipynb
 ├── README.md
 ├── loan-train.csv
-└── loan-test.csv
+├── loan-test.csv
+└── loan-test-predictions.csv
 ```
 
+## How to Run
 
-## Tools & Libraries
+```bash
+pip install pandas numpy scikit-learn scipy matplotlib seaborn jupyter
+jupyter notebook LoanApproval_Classification.ipynb
+```
 
-- Python
-- Pandas and NumPy
-- Scikit-learn
-- Matplotlib and Seaborn
-- Jupyter
+Run all cells top to bottom — the notebook is self-contained and regenerates `loan-test-predictions.csv` in Section 6.
 
-## Future Improvements VOLVER
+## Technologies
 
-- Validate on a newer or independently collected dataset.
-- Add domain-specific error costs and decision thresholds.
-- Track data drift and subgroup performance before deployment.
-- Package the fitted pipeline only after data and licensing checks.
+Python · pandas · NumPy · scikit-learn · SciPy (`binomtest`) · Matplotlib · Seaborn · Jupyter
+
+## Future Improvements
+
+- Validate on a newer or independently collected dataset
+- Address the confirmed `Rural` accuracy gap — more rural holdout data or a rural-specific error-cost review — before real-world use
+- Add domain-specific error costs and decision thresholds (model currently defaults toward approving when uncertain)
+- Add multiple-testing correction (e.g. Bonferroni) if subgroup testing is extended to more features
+- Tune hyperparameters via grid/randomized search
+- Track data drift and subgroup performance before deployment
+- Package the fitted pipeline only after data and licensing checks
