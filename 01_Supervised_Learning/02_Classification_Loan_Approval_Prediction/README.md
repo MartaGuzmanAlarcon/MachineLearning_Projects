@@ -1,6 +1,6 @@
 # Loan Approval Classification
 
-Predicting loan approval from applicant, income, and credit-history data — with a focus on leakage-safe evaluation and subgroup fairness testing, not just a headline accuracy number.
+Predicting loan approval from applicant, income, and credit-history data.
 
 ## Overview
 
@@ -20,14 +20,7 @@ End-to-end, reproducible classification case study: data validation → EDA → 
 - `loan-test.csv` — unlabeled, scored only (no ground truth available)
 - Features: applicant demographics, income, loan amount/term, and credit history
 
-## Project Workflow
-
-```
-Data validation → Focused EDA → Train/holdout split → Pipeline-based
-preprocessing → Baseline + cross-validation → Holdout evaluation →
-Scoring the unlabeled test set → Error analysis & subgroup testing
-```
-
+  
 ## Modelling Decisions
 
 - **Median imputation for numeric features** — `ApplicantIncome`, `CoapplicantIncome`, `LoanAmount` are right-skewed with outliers, so the median stays representative where the mean wouldn't.
@@ -56,17 +49,23 @@ Hyperparameters were fixed by hand, not grid-searched (see Future Improvements).
 
 ## Verified Results
 
-| Selected model | CV macro F1 | Holdout accuracy | Holdout macro F1 |
-|---|---|---|---|
-| Logistic Regression | 0.707 ± 0.077 | 0.8618 | 0.8147 |
+| CV macro F1 | Holdout accuracy | Holdout macro F1 |
+|---|---|---|
+| 0.707 ± 0.077 | **0.862** | **0.815** |
 
-- **Strongest predictor:** `Credit_History` — by far the biggest driver of approval; income and loan amount barely separate approved from rejected applicants on their own.
-- **By class:** "Y" (approved) — 0.84 precision / 0.99 recall, rarely misses a true approval. "N" (rejected) — 0.96 precision / 0.58 recall: when the model predicts rejection it's almost always right, but it only catches ~half of true rejections (22 of 38), defaulting to approval when uncertain.
-- **Generalization:** holdout macro F1 (0.815) landed above CV mean + 1 std (up to 0.784) — a favorable split, not a sign of overfitting, but a small holdout and high CV variance mean this is a reasonable result rather than a guarantee.
-- **Fairness finding:** `Property_Area = Rural` shows a statistically significant accuracy gap (0.676 vs. 0.86 overall, p = 0.005). No other subgroup (`Credit_History`, `Gender`, `Married`, `Education`) showed a significant gap.
-- Predictions for the unlabeled `loan-test.csv` were generated and saved to `loan-test-predictions.csv`.
+| Class | Precision | Recall |
+|---|---|---|
+| Y — approved | 0.84 | 0.99 |
+| N — rejected | 0.96 | 0.58 |
 
-*These are a reproducibility record for the current data/dependency range, not a production benchmark.*
+**🔑 Key takeaways**
+- `Credit_History` >> income or loan amount as a predictor.
+- Model defaults to "approve when unsure" — misses 16/38 true rejections, almost never rejects a real approval.
+- Holdout score beat CV mean + 1 std → favorable split, not proof of generalization (small data, high CV variance).
+
+** Fairness gap** — `Property_Area = Rural`: 0.676 accuracy vs. 0.86 overall (p = 0.005 ✅ real gap). No other subgroup significant.
+
+**🔍 Why it fails** — of 16 false positives, 100% had `Credit_History = 1`: the model over-trusts good credit history. Income runs a bit higher too, but that's n=16 and untested — not a confirmed pattern.
 
 ## Repository Structure
 
@@ -78,14 +77,6 @@ Hyperparameters were fixed by hand, not grid-searched (see Future Improvements).
 └── loan-test-predictions.csv
 ```
 
-## How to Run
-
-```bash
-pip install pandas numpy scikit-learn scipy matplotlib seaborn jupyter
-jupyter notebook LoanApproval_Classification.ipynb
-```
-
-Run all cells top to bottom — the notebook is self-contained and regenerates `loan-test-predictions.csv` in Section 6.
 
 ## Technologies
 
@@ -99,4 +90,3 @@ Python · pandas · NumPy · scikit-learn · SciPy (`binomtest`) · Matplotlib �
 - Add multiple-testing correction (e.g. Bonferroni) if subgroup testing is extended to more features
 - Tune hyperparameters via grid/randomized search
 - Track data drift and subgroup performance before deployment
-- Package the fitted pipeline only after data and licensing checks
