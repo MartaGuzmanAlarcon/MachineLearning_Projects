@@ -25,7 +25,6 @@ End-to-end, reproducible classification case study: data validation → EDA → 
 
 - **Median imputation for numeric features** : `ApplicantIncome`, `CoapplicantIncome`, `LoanAmount` are right-skewed with outliers, so the median stays representative where the mean wouldn't.
 - **Most-frequent imputation for categoricals** : avoids inventing a near-empty "Missing" category.
-- **`Credit_History` note** : stored as numeric (0/1), so it's routed through the numeric branch rather than the categorical one. In practice this barely matters: its distribution is heavily skewed toward 1.0, so median and mode coincide.
 - **`StandardScaler` on numeric features** : needed for Logistic Regression, otherwise `ApplicantIncome` (thousands) would dominate `Credit_History` (0/1) purely from scale.
 - **One-hot, not ordinal, encoding** : none of the categorical features have a natural order.
 - **No leakage** : all imputation values, scaling parameters, and encoded categories are fit on the training split only, inside the pipeline. Holdout and scoring data never influence fitting.
