@@ -16,8 +16,8 @@ End-to-end, reproducible classification case study: data validation → EDA → 
 
 ## Dataset
 
-- `loan-train.csv` — labeled, used for training/holdout (614 rows)
-- `loan-test.csv` — unlabeled, scored only (no ground truth available)
+- `loan-train.csv` : labeled, used for training/holdout (614 rows)
+- `loan-test.csv` : unlabeled, scored only (no ground truth available)
 - Features: applicant demographics, income, loan amount/term, and credit history
 
   
