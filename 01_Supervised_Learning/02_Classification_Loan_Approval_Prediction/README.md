@@ -44,8 +44,8 @@ Hyperparameters were fixed by hand, not grid-searched (see Future Improvements).
 ## Evaluation
 
 - **Model selection:** 5-fold stratified cross-validation on macro F1
-- **Holdout evaluation:** accuracy, macro F1, classification report, confusion matrix — the only point where predictions are checked against ground truth the model never trained on
-- **Subgroup check:** each subgroup's error count tested with a two-sided binomial test against the overall holdout error rate (14%), rather than judged by eye
+- **Holdout evaluation:** accuracy, macro F1, classification report, confusion matrix, the only point where predictions are checked against ground truth the model never trained on
+- **Subgroup check:** each subgroup's error count tested with a two-sided binomial test against the overall holdout error rate (14%), rather than judged by eye.
 
 ## Verified Results
 
@@ -59,13 +59,13 @@ Hyperparameters were fixed by hand, not grid-searched (see Future Improvements).
 | N — rejected | 0.96 | 0.58 |
 
 **🔑 Key takeaways**
-- `Credit_History` >> income or loan amount as a predictor.
-- Model defaults to "approve when unsure" — misses 16/38 true rejections, almost never rejects a real approval.
+- `Credit_History` >> income or loan amount as a predictor (EDA).
+- Model defaults to "approve when unsure" , misses 16/38 true rejections, almost never rejects a real approval.
 - Holdout score beat CV mean + 1 std → favorable split, not proof of generalization (small data, high CV variance).
 
 ** Fairness gap** : `Property_Area = Rural`: 0.676 accuracy vs. 0.86 overall (p = 0.005 ✅ real gap). No other subgroup significant.
 
-**🔍 Why it fails** — of 16 false positives, 100% had `Credit_History = 1`: the model over-trusts good credit history. Income runs a bit higher too, but that's n=16 and untested, not a confirmed pattern.
+** Why it fails**. Of 16 false positives, 100% had `Credit_History = 1`, the model over-trusts good credit history. Income runs a bit higher too, but that's n=16 and untested, not a confirmed pattern.
 
 ## Repository Structure
 
