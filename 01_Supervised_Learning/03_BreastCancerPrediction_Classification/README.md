@@ -30,12 +30,18 @@ To run the notebook, put `Breast Cancer dataset.csv` in the same folder, install
 
 ## Project Structure
 
+```
 breast-cancer-classification/
 ├── README.md
 ├── BreastCancerPredictionClassification.ipynb   # full analysis
-├── Breast Cancer dataset.csv                    # data
-└── requirements.txt                             # packages
+└── Breast Cancer dataset.csv                    # data
+```
 
+The notebook follows this order:
+
+```
+Data check → EDA → Feature engineering → Models → Evaluation → Feature importance → Real-world use
+```
 ## Workflow
 
 ### Data collection and cleaning
