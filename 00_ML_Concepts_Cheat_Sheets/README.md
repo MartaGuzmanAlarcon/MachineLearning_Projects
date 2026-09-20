@@ -32,7 +32,7 @@ Each page ends with a common pitfall, a tip, a practice question and a one-line 
 
 ## My annotations
 
-The pages are covered in colour highlights and handwritten notes. I used them to mark the key points and to remember details that are easy to forget: for example, that L1 regularisation can remove features while L2 only shrinks them, that PCA helps when features are highly correlated, or that scaling gives regularisation a fair start. I also added worked examples for entropy and Gini, and answered the practice questions by hand. Some of the handwritten notes are in Spanish.
+The pages are covered in colour highlights and handwritten notes. I used them to mark the key points and to remember details that are easy to forget. Some of the handwritten notes are in Spanish.
 
 ## Notes on the code
 
