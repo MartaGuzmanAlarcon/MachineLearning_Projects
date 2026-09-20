@@ -28,6 +28,8 @@ The last section describes what would still be needed before a model like this c
 
 To run the notebook, put `Breast Cancer dataset.csv` in the same folder, install the packages above and run all cells in order. A single random seed (42) is used everywhere, so the same setup should give the same numbers. Results can still shift a little between environments: XGBoost, and with it the stacking ensemble, differed by about one patient when the notebook was run on two different setups.
 
+##
+
 ## Workflow
 
 ### Data collection and cleaning
