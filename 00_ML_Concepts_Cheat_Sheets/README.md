@@ -4,7 +4,7 @@ My own theory notes on the main machine learning algorithms, with the aim to kee
 
 ## What's inside
 
-One page per algorithm, eight in total. To view the pdf press 'Download raw file':
+One page per algorithm, eight in total. To view the PDF, go to the folder `00_ML_Concepts_Cheat_Sheets/`, click on `MachineLearningConceptsMartaGuzman.pdf`, and then prsss **"Download raw file"**:
 
 | # | Algorithm | Type | Typical uses on the page |
 |---|---|---|---|
