@@ -4,7 +4,7 @@ My own theory notes on the main machine learning algorithms, with the aim to kee
 
 ## What's inside
 
-One page per algorithm, eight in total, in the PDF [`ML_Concepts_Cheat_Sheets.pdf`](./ML_Concepts_Cheat_Sheets.pdf):
+One page per algorithm, eight in total. You can find the pdf: [`ML_Concepts_Cheat_Sheets.pdf`](./ML_Concepts_Cheat_Sheets.pdf), click 'Download raw file' to view":
 
 | # | Algorithm | Type | Typical uses on the page |
 |---|---|---|---|
