@@ -38,7 +38,7 @@ The pages are covered in colour highlights and handwritten notes. I used them to
 
 The Python snippets use tiny toy datasets. They show the workflow (split, fit, predict, evaluate) and are not meant as real analyses. To see these algorithms on a real dataset, look at [`03_BreastCancerPrediction_Classification`](../03_BreastCancerPrediction_Classification), where logistic regression, decision tree, random forest, KNN, Naive Bayes, SVM and XGBoost (a gradient boosting library) are compared, and at [`01_Linear_Regression_Diamond_Price`](../01_Linear_Regression_Diamond_Price) for linear regression.
 
-These are study notes and not a textbook. If you spot a mistake, feel free to open an issue.
+These are study notes and not a textbook. If you spot a mistake, let me know.
 
 ## Files
 
